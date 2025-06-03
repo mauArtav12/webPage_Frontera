@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Este proyecto es una tienda en línea enfocada en la venta de productos traídos de la frontera Costa Rica - Panamá.  
+Este proyecto es una tienda en línea enfocada en la venta de productos traídos de la frontera Costa Rica - Panamá.
 Está desarrollada con tecnologías web básicas: HTML, CSS y JavaScript, con una estructura modular que facilita su escalabilidad y mantenimiento.
 
 ---
@@ -20,14 +20,16 @@ Mantener una estructura clara y ordenada ayuda a escalar y mantener el proyecto 
 ├── /js
 │   ├── cart.js                   # Logica del carrito de compras.
 │   ├── checkout.js               # Funcionalidad del proceso de pago.
+│   ├── contact.js                # Logica de la pagina de contacto.
+│   ├── data.js                   # Manejo de productos.
+│   ├── formatter.js              # Formateadores (ej. moneda).
 │   ├── main.js                   # Scripts generales y funciones comunes.
-│   └── products.js               # Manejo y carga de productos.
-├── /pages
-│   ├── cart.html                 # Pagina del carrito.
-│   ├── checkout.html             # Pagina de checkout.
-│   ├── contact.html              # Pagina de contacto (Pendiente por implementar).
-│   ├── index.html                # Pagina principal / landing.
-│   └── products.html             # Pagina de listado de productos.
+│   └── toast.js                  # Funciones para mostrar notificaciones tipo toast.
+├── cart.html                     # Pagina del carrito.
+├── checkout.html                 # Pagina de checkout.
+├── contact.html                  # Pagina de contacto.
+├── index.html                    # Pagina principal / landing.
+├── products.html                 # Pagina de listado de productos.
 └── README.md                     # Documentacion del proyecto.
 ```
 
@@ -64,17 +66,20 @@ Contiene scripts JavaScript, divididos según funcionalidad:
 - `products.js`: Carga y gestión de productos (catálogo).
 - `cart.js`: Manejo del carrito de compras (agregar, actualizar, eliminar productos).
 - `checkout.js`: Funciones relacionadas con la página de pago y validaciones.
+- `contact.js`: Logiva y validaciones para la pagina de contacto.
 - `main.js`: Funciones generales y scripts que impactan todo el sitio (como menú, modales, etc.).
+- `toast.js`: Funciones para mostrar notificaciones tipo toast.
+- `formatter.js`: Funciones para formatear valores como moneda.
 
 ### /pages/
 
 HTML de las distintas páginas que componen el sitio.
 
-- `index.html`: Página principal.
-- `products.html`: Listado de productos.
-- `cart.html`: Vista del carrito.
-- `checkout.html`: Proceso de pago.
-- `contact.html`: Página para contacto (en desarrollo).
+- `index.html`: Página principal con productos destacados.
+- `products.html`: Listado completo de productos.
+- `cart.html`: Vista y manejo del carrito de compras.
+- `checkout.html`: Pagina de pago.
+- `contact.html`: Página de contacto.
 
 ---
 
@@ -105,7 +110,6 @@ cd webpage-frontera
 
 ## Futuras mejoras
 
-- Completar pagina de contacto.
 - Optimizar carga de imagenes y scripts para mejorar rendimiento.
 - Implementar formularios con validaciones robustas.
 - Añadir autenticacion de usuario y persistencia en el carrito.
