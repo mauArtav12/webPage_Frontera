@@ -1,106 +1,114 @@
-# webPage_Frontera
+# Tienda Frontera - Web Page
 
-## Estructura recomendada para un proyecto de página web
+## Descripción
 
-Una buena estructura de carpetas ayuda a mantener tu proyecto organizado, fácil de escalar y mantener.
+Este proyecto es una tienda en línea enfocada en la venta de productos traídos de la frontera Costa Rica - Panamá.  
+Está desarrollada con tecnologías web básicas: HTML, CSS y JavaScript, con una estructura modular que facilita su escalabilidad y mantenimiento.
 
-### 📁 Estructura básica (HTML, CSS, JS)
+---
+
+## Estructura del proyecto
+
+Mantener una estructura clara y ordenada ayuda a escalar y mantener el proyecto sin dolores de cabeza.
 
 ```
 /webpage-frontera
 ├── /css
-│   └── /style.css
+│   └── /style.css                # Estilos generales de la pagina.
 ├── /img
-│   └── (Imagenes Productos)
+│   └── (Imagenes de productos)
 ├── /js
-│   ├── cart.js
-│   ├── main.js
-│   └── products.js
-├── pages
-│   ├── cart.html
-│   ├── checkout.html
-│   ├── contact.html
-│   ├── index.html
-│   └── products.html
-└── README.md
+│   ├── cart.js                   # Logica del carrito de compras.
+│   ├── checkout.js               # Funcionalidad del proceso de pago.
+│   ├── main.js                   # Scripts generales y funciones comunes.
+│   └── products.js               # Manejo y carga de productos.
+├── /pages
+│   ├── cart.html                 # Pagina del carrito.
+│   ├── checkout.html             # Pagina de checkout.
+│   ├── contact.html              # Pagina de contacto (Pendiente por implementar).
+│   ├── index.html                # Pagina principal / landing.
+│   └── products.html             # Pagina de listado de productos.
+└── README.md                     # Documentacion del proyecto.
 ```
 
-### ✅ Buenas prácticas
-
-- Usa **nombres claros y en inglés**
-- Agrupa archivos por tipo o funcionalidad
-- Separa responsabilidades: lógica, UI, estilos, assets
-- Incluye un `README.md` con instrucciones claras
-- Usa control de versiones (`git`)
 
 ---
 
-### 📄 index.html
+## Buenas prácticas adoptadas
 
-Archivo principal de la página. Es la entrada del sitio y contiene la estructura base (HTML).  
-Aquí se enlazan el CSS, JS y otros archivos necesarios.
-
----
-
-### 📁 /assets/
-
-Carpeta que contiene recursos estáticos **no relacionados directamente con el código**, pero que se usan en la web.
-
-- `/images/`: Imágenes como `.png`, `.jpg`, `.svg`, etc.
-- `/fonts/`: Fuentes personalizadas en `.woff`, `.ttf`, etc.
-- `/icons/`: Íconos del diseño, generalmente en `.svg` o `.png`.
+- Uso de **nombres en inglés y claros** para archivos y variables, facilitando la colaboración internacional.
+- Separación por **responsabilidades**:  
+  - CSS para estilos.
+  - JS para lógica específica (productos, carrito, checkout, etc.).
+  - HTML para estructura y contenido.
+- Modularización del código para facilitar mantenimiento y escalabilidad.
+- Documentación clara en `README.md` para cualquier nuevo desarrollador o usuario.
+- Uso recomendado de control de versiones (Git) para gestión del código.
 
 ---
 
-### 📁 /css/
+## Descripción de carpetas y archivos clave
 
-Aquí van los archivos de estilos.
+### /css/
 
-- `styles.css`: Archivo principal para definir cómo se ve tu sitio (colores, tipografías, márgenes, etc.).
+Contiene los archivos de estilos. Actualmente `style.css` es el archivo principal, donde se definen colores, tipografías, layout, y estilos generales.
 
-Puedes crear más archivos si separas los estilos por componentes o secciones.
+### /img/
 
----
+Contiene imágenes usadas en la web, principalmente de los productos.
 
-### 📁 /js/
+### /js/
 
-Contiene los archivos JavaScript que manejan la lógica del sitio.
+Contiene scripts JavaScript, divididos según funcionalidad:
 
-- `scripts.js`: Archivo principal para interacciones, validaciones, menús, etc.
+- `products.js`: Carga y gestión de productos (catálogo).
+- `cart.js`: Manejo del carrito de compras (agregar, actualizar, eliminar productos).
+- `checkout.js`: Funciones relacionadas con la página de pago y validaciones.
+- `main.js`: Funciones generales y scripts que impactan todo el sitio (como menú, modales, etc.).
 
----
+### /pages/
 
-### 📁 /lib/
+HTML de las distintas páginas que componen el sitio.
 
-Contiene **librerías externas** (de terceros) como:
-
-- jQuery
-- Bootstrap
-- Swiper, etc.
-
-No deberías modificar estos archivos, solo usarlos.
-
----
-
-### 📁 /components/
-
-Útil si usas fragmentos HTML reutilizables, como:
-
-- `header.html`
-- `footer.html`
-- `navbar.html`
-
-Ideal para mantener el código limpio y modular, especialmente con herramientas como templating engines o frameworks.
+- `index.html`: Página principal.
+- `products.html`: Listado de productos.
+- `cart.html`: Vista del carrito.
+- `checkout.html`: Proceso de pago.
+- `contact.html`: Página para contacto (en desarrollo).
 
 ---
 
-### 📄 README.md
+## Recomendaciones para el desarrollo
 
-Archivo de texto donde explicas cómo instalar, correr y usar tu proyecto.
+- Mantener las funciones JavaScript en archivos separados según su responsabilidad.
+- Utilizar ES6 Modules (import/export) para mantener el código organizado (si se incorpora un bundler como Vite o Webpack en el futuro).
+- Usar un preprocesador CSS (SASS/SCSS) si el CSS crece mucho.
+- Implementar control de versiones con Git y buenas prácticas de commits claros.
+- Documentar funciones complejas con comentarios para facilitar mantenimiento.
 
-Incluye:
-- Descripción del proyecto
-- Instrucciones de instalación
-- Cómo colaborar o contribuir
+---
+
+## Cómo correr el proyecto localmente
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/tuusuario/webpage-frontera.git
+cd webpage-frontera
+```
+
+2. Abrir cualquier archivo `.html` en un navegador moderno (Chrome, Firefox, Edge).
+
+3. ***(Opcional)*** Para desarrillo avanzado, usar un servidor local (Live Server de VSCode o `python -m http.server`).
+
+---
+
+## Futuras mejoras
+
+- Completar pagina de contacto.
+- Optimizar carga de imagenes y scripts para mejorar rendimiento.
+- Implementar formularios con validaciones robustas.
+- Añadir autenticacion de usuario y persistencia en el carrito.
+- Integrar metodos de pago reales en checkout.
 
 ---

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Carrito | Tienda Frontera</title>
-    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/styles.css"/>
   </head>
+
   <body>
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
@@ -12,15 +14,29 @@
         <ul class="nav-list">
           <li><a href="index.html">Inicio</a></li>
           <li><a href="products.html">Productos</a></li>
-          <li><a href="cart.html">Carrito</a></li>
+          <li><a href="cart.html" aria-current="page">Carrito</a></li>
           <li><a href="contact.html">Contactanos</a></li>
         </ul>
       </nav>
     </header>
-    <h1>Productos en Carrito</h1>
-    <p>Aqui iran los productos a comprar</p>
+
+    <main class="main-content">
+      <section id="cart-section">
+        <h2>Carrito de Compras</h2>
+        <div id="cart-items">
+          <!-- Los productos agregados se mostraran aqui dinamicamente -->
+        </div>
+        <div id="cart-total-container">
+          <p><strong>Total:</strong> &#8353;<span id="cart-total">0.00</span></p>
+          <a href="checkout.html" class="btn">Proceder al pago</a>
+        </div>
+      </section>
+    </main>
+
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="../js/cart.js"></script>
   </body>
 </html>
