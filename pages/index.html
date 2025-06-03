@@ -60,23 +60,9 @@
 
       <!-- Productos destacados -->
       <section class="featured-products">
-        <h2>Más Vendidos</h2>
-        <div class="product-grid">
-          <div class="product-card">
-            <img src="../assets/producto1.jpg" alt="Producto 1" />
-            <h4>Café de Chiriquí</h4>
-            <a href="products.html" class="btn small">Ver más</a>
-          </div>
-          <div class="product-card">
-            <img src="../assets/producto2.jpg" alt="Producto 2" />
-            <h4>Miel Orgánica</h4>
-            <a href="products.html" class="btn small">Ver más</a>
-          </div>
-          <div class="product-card">
-            <img src="../assets/producto3.jpg" alt="Producto 3" />
-            <h4>Artesanía Ngäbe</h4>
-            <a href="products.html" class="btn small">Ver más</a>
-          </div>
+        <h2>Productos Destacados</h2>
+        <div id="product-grid" class="product-grid">
+          <!-- Aqui inyectaremos las cards con JS-->
         </div>
       </section>
 
@@ -91,5 +77,24 @@
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Modal para agregar al carrito -->
+    <div id="add-to-cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3>¿Cuántos quieres agregar al carrito?</h3>
+        <input type="number" id="quantity-input" min="1" value="1" />
+        <div class="modal-actions">
+          <button id="confirm-add-btn">Agregar</button>
+          <button id="cancel-add-btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast mensaje -->
+    <div id="toast" class="toast hidden"></div>
+    
+    <script src="../js/data.js"></script>
+    <script src="../js/formatter.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>
