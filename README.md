@@ -7,45 +7,21 @@ Una buena estructura de carpetas ayuda a mantener tu proyecto organizado, fácil
 ### 📁 Estructura básica (HTML, CSS, JS)
 
 ```
-/mi-proyecto
-├── index.html
-├── /assets
-│   ├── /images
-│   ├── /fonts
-│   └── /icons
+/webpage-frontera
 ├── /css
-│   └── styles.css
+│   └── /style.css
+├── /img
+│   └── (Imagenes Productos)
 ├── /js
-│   └── scripts.js
-├── /lib
-│   └── (bibliotecas externas como jQuery, Bootstrap, etc.)
-├── /components
-│   └── header.html, footer.html, etc.
-└── README.md
-```
-
-### 📁 Estructura moderna (React/Vite o similar)
-
-```
-/mi-proyecto
-├── public/
+│   ├── cart.js
+│   ├── main.js
+│   └── products.js
+├── pages
+│   ├── cart.html
+│   ├── checkout.html
+│   ├── contact.html
 │   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── assets/
-│   │   ├── images/
-│   │   ├── fonts/
-│   ├── components/
-│   │   └── Navbar.jsx, Footer.jsx, etc.
-│   ├── pages/
-│   │   └── Home.jsx, About.jsx, etc.
-│   ├── styles/
-│   │   └── global.css, variables.css
-│   ├── App.jsx
-│   └── main.jsx
-├── .gitignore
-├── package.json
-├── vite.config.js / webpack.config.js
+│   └── products.html
 └── README.md
 ```
 
