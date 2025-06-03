@@ -27,7 +27,7 @@
           <!-- Los productos agregados se mostraran aqui dinamicamente -->
         </div>
         <div id="cart-total-container">
-          <p><strong>Total:</strong> &#8353;<span id="cart-total">0.00</span></p>
+          <p><strong>Total:</strong> <span id="cart-total">0.00</span></p>
           <a href="checkout.html" class="btn">Proceder al pago</a>
         </div>
       </section>
@@ -37,6 +37,20 @@
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
 
+    <div id="remove-from-cart-modal" class="modal hidden">
+      <div class="modal-content">
+        <h3 id="modal-title">¿Cuántos productos deseas eliminar?</h3>
+        <input type="number" id="remove-quantity-input" min="1" value="1" aria-describedby="modal-desc"/>
+        <div class="modal-buttons">
+          <button id="confirm-remove-btn" type="button">Confirmar</button>
+          <button id="cancel-remove-btn" type="button">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+    <script src="../js/toast.js"></script>
     <script src="../js/cart.js"></script>
   </body>
 </html>

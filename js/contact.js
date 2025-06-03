@@ -1,3 +1,4 @@
+//contact.js
 const form = document.getElementById('contactForm');
 const feedback = document.getElementById('formFeedback');
 

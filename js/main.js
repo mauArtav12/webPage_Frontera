@@ -1,3 +1,4 @@
+//main.js
 let currentProductId = null;
 
 function renderProducts({ onlyFeatured = false } = {}) {
@@ -34,18 +35,6 @@ function renderProducts({ onlyFeatured = false } = {}) {
   });
 }
 
-function showToast(message) {
-  const toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.classList.add('show');
-  toast.classList.remove('hidden');
-
-  setTimeout(() => {
-    toast.classList.remove('show');
-    toast.classList.add('hidden');
-  }, 3000);
-}
-
 function addToCart(productID, quantity) {
   const cart = JSON.parse(localStorage.getItem("cart")) || [];
   const product = products.find(p => p.id === parseInt(productID));
@@ -77,7 +66,7 @@ window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('confirm-add-btn')?.addEventListener('click', () => {
     const quantity = parseInt(document.getElementById('quantity-input').value);
     if (isNaN(quantity) || quantity <= 0) {
-      alert('Cantidad inválida.');
+      showToast('Por favor, ingresa una cantidad válida mayor que cero.');
       return;
     }
 
