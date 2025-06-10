@@ -1,15 +1,59 @@
-//main.js
 let currentProductId = null;
+let currentMinPrice = 0;       // Precio mínimo inicial
+let currentMaxPrice = 100000;  // Precio máximo inicial
 
-function renderProducts({ onlyFeatured = false } = {}) {
+// Función para obtener categorías únicas de los productos
+function getUniqueCategories() {
+  const categories = products.map(p => p.category);
+  return [...new Set(categories)].sort();
+}
+
+// Renderiza los checkboxes de categorías
+function renderCategoryCheckboxes() {
+  const container = document.getElementById("category-filters");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const categories = getUniqueCategories();
+  categories.forEach(cat => {
+    const checkbox = document.createElement("label");
+    checkbox.innerHTML = `
+      <input type="checkbox" value="${cat}" class="category-checkbox" />
+      ${cat}
+    `;
+    container.appendChild(checkbox);
+  });
+}
+
+function renderProducts({ onlyFeatured = false, searchTerm = '', categories = [], minPrice = 0, maxPrice = 100000 } = {}) {
   const grid = document.getElementById("product-grid");
   if (!grid) return;
 
   grid.innerHTML = '';
 
-  const filtered = onlyFeatured
-    ? products.filter(p => p.featured)
-    : products;
+  const lowerSearchTerm = searchTerm.toLowerCase();
+  const lowerCategories = categories.map(c => c.toLowerCase());
+
+  const filtered = products.filter(p => {
+    if (onlyFeatured && !p.featured) return false;
+
+    const matchesSearch =
+      p.name.toLowerCase().includes(lowerSearchTerm) ||
+      p.description.toLowerCase().includes(lowerSearchTerm);
+
+    const matchesCategory =
+      lowerCategories.length === 0 || lowerCategories.includes(p.category.toLowerCase());
+
+    const matchesPrice = p.price >= minPrice && p.price <= maxPrice;
+
+    return matchesSearch && matchesCategory && matchesPrice;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<p class="no-results">No se encontraron productos que coincidan.</p>`;
+    return;
+  }
 
   filtered.forEach(product => {
     const card = document.createElement("div");
@@ -57,12 +101,86 @@ function addToCart(productID, quantity) {
 window.addEventListener('DOMContentLoaded', () => {
   const isIndex = location.pathname.includes("index.html") || location.pathname.endsWith("/");
 
-  if (isIndex) {
-    renderProducts({ onlyFeatured: true }); // Solo productos destacados en index
-  } else {
-    renderProducts({ onlyFeatured: false }); // Todos los productos en otras páginas
+  let currentSearchTerm = '';
+  let selectedCategories = [];
+
+  renderCategoryCheckboxes();
+
+  // Actualizar productos con los filtros actuales
+  function updateProducts() {
+    renderProducts({
+      onlyFeatured: isIndex,
+      searchTerm: currentSearchTerm,
+      categories: selectedCategories,
+      minPrice: currentMinPrice,
+      maxPrice: currentMaxPrice
+    });
   }
 
+  // Buscar productos
+  const searchInput = document.getElementById('product-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', e => {
+      currentSearchTerm = e.target.value;
+      updateProducts();
+    });
+  }
+
+  // Cambios en categorías
+  const categoryContainer = document.getElementById('category-filters');
+  if (categoryContainer) {
+    categoryContainer.addEventListener('change', () => {
+      const checkboxes = categoryContainer.querySelectorAll('.category-checkbox:checked');
+      selectedCategories = Array.from(checkboxes).map(cb => cb.value);
+      updateProducts();
+    });
+  }
+
+  // Filtros de rango de precios: mínimo y máximo
+  const priceMinInput = document.getElementById('price-min');
+  const priceMaxInput = document.getElementById('price-max');
+  const priceMinValue = document.getElementById('price-min-value');
+  const priceMaxValue = document.getElementById('price-max-value');
+
+  if (priceMinInput && priceMaxInput && priceMinValue && priceMaxValue) {
+    // Inicializar valores visuales
+    priceMinValue.textContent = Number(priceMinInput.value).toLocaleString();
+    priceMaxValue.textContent = Number(priceMaxInput.value).toLocaleString();
+
+    priceMinInput.addEventListener('input', () => {
+      let minVal = Number(priceMinInput.value);
+      let maxVal = Number(priceMaxInput.value);
+
+      if (minVal > maxVal) {
+        minVal = maxVal;
+        priceMinInput.value = minVal;
+      }
+
+      currentMinPrice = minVal;
+      priceMinValue.textContent = minVal.toLocaleString();
+
+      updateProducts();
+    });
+
+    priceMaxInput.addEventListener('input', () => {
+      let minVal = Number(priceMinInput.value);
+      let maxVal = Number(priceMaxInput.value);
+
+      if (maxVal < minVal) {
+        maxVal = minVal;
+        priceMaxInput.value = maxVal;
+      }
+
+      currentMaxPrice = maxVal;
+      priceMaxValue.textContent = maxVal.toLocaleString();
+
+      updateProducts();
+    });
+  }
+
+  updateProducts();
+
+  // Manejo del modal para agregar al carrito
   document.getElementById('confirm-add-btn')?.addEventListener('click', () => {
     const quantity = parseInt(document.getElementById('quantity-input').value);
     if (isNaN(quantity) || quantity <= 0) {

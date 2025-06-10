@@ -7,7 +7,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  margin: 0;
 }
 
 main {
@@ -110,10 +109,322 @@ main {
 }
 
 /* ======= Estilos para la página Home (sección productos) ======= */
-
 .home-section {
   padding: 2rem;
   text-align: center;
+}
+
+/* Contenedor general de filtros */
+.filters-container {
+  padding: 1rem;
+  background-color: #f5f5f5;
+  border-radius: 6px;
+  max-width: 320px;
+  font-family: Arial, sans-serif;
+}
+
+/* Grupo de filtros (categorías, precios, etc) */
+.filter-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Títulos de los grupos */
+.filter-group h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  color: #333;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3rem;
+}
+
+/* Checkbox label: checkbox y texto una debajo de otra */
+.filter-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Checkbox input separado */
+.filter-group label input[type="checkbox"] {
+  margin-right: 0.6rem;
+  flex-shrink: 0;
+}
+
+/* Controles de rango de precios */
+.filter-group input[type="range"] {
+  width: 100%;
+  margin: 0.3rem 0 0.7rem 0;
+  -webkit-appearance: none;
+  height: 6px;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Estilo para el pulgar del slider (Chrome, Edge, Safari) */
+.filter-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  margin-top: -5px; /* Centra el pulgar verticalmente */
+}
+
+/* Pulgar slider para Firefox */
+.filter-group input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #4CAF50;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+}
+
+/* Label para mostrar valores al lado del rango */
+.filter-group label[for="price-min"],
+.filter-group label[for="price-max"] {
+  font-size: 0.9rem;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  user-select: none;
+}
+
+/* El span que muestra el valor */
+#price-min-value,
+#price-max-value {
+  font-weight: 600;
+  color: #222;
+}
+
+/* Para evitar que los valores se vean muy pegados */
+.filter-group label[for="price-min"] span,
+.filter-group label[for="price-max"] span {
+  min-width: 70px;
+  text-align: right;
+}
+
+
+/* Contenedor de los checkboxes dentro del filtro */
+#category-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* espacio entre opciones */
+  margin-top: 8px;
+}
+
+/* Opciones individuales (labels) */
+#category-filters label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Estilo para el filtro de precio */
+.filter-group input[type="range"] {
+  width: 100%;
+  margin-top: 6px;
+}
+
+
+/* Contenedor principal con sidebar y contenido */
+.main-content.with-sidebar {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Sidebar de filtros */
+.filters-sidebar {
+  flex: 0 0 250px; /* ancho fijo */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fafafa;
+  height: fit-content; /* para que no se expanda más que su contenido */
+  position: sticky;
+  top: 80px; /* que quede fijo al hacer scroll (ajusta según header) */
+}
+
+/* Grupo de filtros */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Buscador dentro del sidebar */
+.filter-group.search-group input[type="search"] {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.filter-group.search-group input[type="search"]:focus {
+  border-color: #3b82f6; /* azul suave */
+  outline: none;
+}
+
+/* Títulos de los grupos */
+.filter-group h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* ======= Nuevos estilos añadidos o modificados ======= */
+
+/* Nuevo: sección de filtros superiores en productos.html */
+.filters-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 600px) {
+  .filters-bar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Ajuste: más margen para separar filtros del grid */
+.products-section {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+/* Ajuste: input de búsqueda con icono (revisado) */
+#search-container {
+  position: relative;
+}
+
+#search-container::after {
+  content: "\1F50D";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #28a745;
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+#category-filter-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 15px auto; /* centrado horizontal, margen abajo */
+  padding: 0 10px;
+  font-family: inherit;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#category-filter-container label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #28a745; /* verde destacado */
+}
+
+#category-filter {
+  padding: 10px 15px;
+  border: 2px solid #28a745;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #333;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+#category-filter:focus {
+  outline: none;
+  border-color: #1e7e34;
+  box-shadow: 0 0 8px rgba(30, 126, 52, 0.5);
+  background-color: #fff;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  #category-filter-container {
+    max-width: 100%;
+  }
+}
+
+/* Contenedor para centrar el buscador */
+#search-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 25px auto; /* Centrado horizontal y margen abajo */
+  padding: 0 10px;
+}
+
+/* Estilo del input buscador */
+#product-search {
+  width: 100%;
+  padding: 12px 40px 12px 15px; /* espacio para ícono a la derecha */
+  font-size: 1rem;
+  font-family: inherit;
+  border: 2px solid #28a745; /* Verde destacado */
+  border-radius: 30px; /* bordes redondeados, estilo "pill" */
+  box-sizing: border-box;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  background-color: #f9f9f9;
+  color: #333;
+  position: relative;
+}
+
+/* Sombra y borde al enfocar */
+#product-search:focus {
+  outline: none;
+  border-color: #1e7e34; /* Verde más oscuro */
+  box-shadow: 0 0 8px rgba(30, 126, 52, 0.5);
+  background-color: #fff;
+}
+
+/* Ícono de lupa dentro del input usando pseudo-elemento */
+#search-container {
+  position: relative;
+}
+
+#search-container::after {
+  content: "\1F50D"; /* Unicode de lupa 🔍 */
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #28a745;
+  font-size: 1.2rem;
+  pointer-events: none; /* para que no interfiera con clicks */
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  #search-container {
+    max-width: 100%;
+  }
 }
 
 .products-section {
