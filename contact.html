@@ -1,65 +1,116 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Configuración del documento -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Título de la pestaña -->
     <title>Contacto | Tienda Frontera</title>
-    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Enlace a la hoja de estilos principal -->
+    <link rel="stylesheet" href="css/styles.css"/>
   </head>
 
   <body>
+    <!-- Encabezado del sitio -->
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
+
+      <!-- Navegación principal del sitio -->
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="index.html">Inicio</a></li>
           <li><a href="products.html">Productos</a></li>
           <li><a href="cart.html">Carrito</a></li>
-          <li><a href="contact.html" aria-current="page">Contactanos</a></li>
+          <li><a href="contact.html" aria-current="page">Contáctanos</a></li>
         </ul>
       </nav>
     </header>
 
+    <!-- Contenido principal de la página -->
     <main class="main-content">
       <section class="contact-section">
+        <!-- Título y descripción -->
         <h2>Contactanos</h2>
-        <p>Escribenos por Whatsapp, correo electronico o usa el formulario a continuacion.</p>
+        <p>Escríbenos por WhatsApp, correo electrónico o usa el formulario a continuación.</p>
 
+        <!-- Información de contacto directa -->
         <section class="contact-info">
-          <p><strong>Whatsapp:</strong> <a href="https://wa.me/50672812026" target="_blank" rel="noopener">+506 7281-2026</a></p>
-          <p><strong>Correo electronico:</strong> <a href="mailto:artavia.monge.mauricio@gmail.com">artavia.monge.mauricio@gmail.com</a></p>
+          <p>
+            <strong>Whatsapp:</strong>
+            <a href="https://wa.me/50672812026" target="_blank" rel="noopener">
+              +506 7281-2026
+            </a>
+          </p>
+          <p>
+            <strong>Correo electronico:</strong>
+            <a href="mailto:artavia.monge.mauricio@gmail.com">
+              artavia.monge.mauricio@gmail.completa
+            </a>
+          </p>
         </section>
 
+        <!-- Formulario de contacto -->
         <section class="contact-form-section">
           <form id="contactForm" novalidate>
+            <!-- Campo: Nombre completo -->
             <div class="form-group">
               <label for="name">Nombre completo</label>
-              <input type="text" id="name" name="name" required minlength="3" placeholder="Tu nombre completo"/>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                minlength="3"
+                placeholder="Tu nombre completo"
+              />
               <span class="error-message" aria-live="polite"></span>
             </div>
 
+            <!-- Campo: Correo electrónico -->
             <div class="form-group">
-              <label for="name">Correo electronico</label>
-              <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com"/>
+              <label for="email">Correo electronico</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="correo@ejemplo.com"
+              />
               <span class="error-message" aria-live="polite"></span>
             </div>
 
+            <!-- Campo: Mensaje -->
             <div class="form-group">
               <label for="message">Mensaje</label>
-              <textarea id="message" name="message" rows="5" required minlength="10" placeholder="Escribe tu mensaje aquí..."></textarea>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                minlength="10"
+                placeholder="Escribe tu mensaje aquí..."
+              ></textarea>
               <span class="error-message" aria-live="polite"></span>
             </div>
 
+            <!-- Botón de envío -->
             <button type="submit">Enviar</button>
+
+            <!-- Retroalimentación visual del formulario -->
             <p id="formFeedback" role="alert" aria-live="polite"></p>
           </form>
         </section>
       </section>
     </main>
 
+    <!-- Pie de página del sitio -->
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Script de funcionalidad del formulario -->
     <script src="js/contact.js"></script>
   </body>
 </html>

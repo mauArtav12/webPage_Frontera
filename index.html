@@ -1,37 +1,48 @@
-<!-- opencart, shopify, godaddy, buscar pasarela de pagos en costa rica, Promerica, BAC (lider) -->
+<!-- 
+Notas de desarrollo:
+- Explorar pasarelas de pago en Costa Rica: BAC (líder), Promerica, etc.
+- Considerar integración futura con plataformas como OpenCart, Shopify, GoDaddy.
+-->
 
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- Configuración del documento -->
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Título de la pestaña -->
     <title>Tienda Frontera</title>
+
+    <!-- Enlace a la hoja de estilos principal -->
     <link rel="stylesheet" href="css/styles.css"/>
   </head>
 
   <body>
+    <!-- Encabezado del sitio -->
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
+
+      <!-- Navegación principal del sitio -->
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="index.html" aria-current="page">Inicio</a></li>
           <li><a href="products.html">Productos</a></li>
           <li><a href="cart.html">Carrito</a></li>
-          <li><a href="contact.html">Contactanos</a></li>
+          <li><a href="contact.html">Contáctanos</a></li>
         </ul>
       </nav>
     </header>
 
+    <!-- Contenido principal -->
     <main class="home-section">
-      <!-- <section class="welcome-section">
-        <h2 class="section-title">Bienvenido a Tienda Frontera</h2>
-        <p class="section-description">Productos exclusivos desde la frontera Costa Rica - Panama.</p>
-        <a href="products.html" class="btn">Ver productos</a>
-      </section> -->
-
-      <!-- Hero -->
+      <!-- Hero principal con llamado a la acción -->
       <section class="hero">
-        <img src="assets/hero-frontera.jpg" alt="Productos desde la frontera" class="hero-image" />
+        <img
+          src="assets/hero-frontera.jpg"
+          alt="Productos desde la frontera"
+          class="hero-image"
+        />
         <div class="hero-text">
           <h2>¡Explora lo mejor de la frontera!</h2>
           <p>Calidad, autenticidad y envío rápido a todo Costa Rica.</p>
@@ -39,34 +50,36 @@
         </div>
       </section>
 
-      <!-- Beneficios -->
+      <!-- Beneficios de la tienda -->
       <section class="features">
         <div class="feature">
-          <img src="assets/icon-delivery.svg" alt="Entrega rápida" />
+          <img src="assets/icon-delivery.svg" alt="Entrega rápida"/>
           <h3>Entrega Rápida</h3>
           <p>Enviamos tus productos en menos de 48 horas.</p>
         </div>
+
         <div class="feature">
-          <img src="assets/icon-unique.svg" alt="Productos únicos" />
+          <img src="assets/icon-unique.svg" alt="Productos únicos"/>
           <h3>Productos Únicos</h3>
           <p>Artículos difíciles de conseguir, seleccionados desde la frontera.</p>
         </div>
+
         <div class="feature">
-          <img src="assets/icon-support.svg" alt="Soporte local" />
+          <img src="assets/icon-support.svg" alt="Soporte local"/>
           <h3>Soporte Local</h3>
           <p>Atención personalizada con servicio 100% nacional.</p>
         </div>
       </section>
 
-      <!-- Productos destacados -->
+      <!-- Productos destacados cargados dinámicamente -->
       <section class="featured-products">
         <h2>Productos Destacados</h2>
         <div id="product-grid" class="product-grid">
-          <!-- Aqui inyectaremos las cards con JS-->
+          <!-- Cards de productos serán insertadas con JavaScript -->
         </div>
       </section>
 
-      <!-- Frase motivacional -->
+      <!-- Frase de marca -->
       <section class="slogan">
         <blockquote>
           “Desde la frontera hasta tu hogar: calidad garantizada”
@@ -74,11 +87,12 @@
       </section>
     </main>
 
+    <!-- Pie de página del sitio -->
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
 
-    <!-- Modal para agregar al carrito -->
+    <!-- Modal: Agregar al carrito -->
     <div id="add-to-cart-modal" class="modal hidden">
       <div class="modal-content">
         <h3>¿Cuántos quieres agregar al carrito?</h3>
@@ -90,8 +104,16 @@
       </div>
     </div>
 
-    <div id="toast" class="toast hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <!-- Notificación tipo "toast" -->
+    <div
+      id="toast"
+      class="toast hidden"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    ></div>
     
+    <!-- Scripts para funcionalidad -->
     <script src="js/data.js"></script>
     <script src="js/formatter.js"></script>
     <script src="js/toast.js"></script>

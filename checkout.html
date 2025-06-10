@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
+    <!-- Configuración del documento -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Título de la pestaña -->
     <title>Checkout | Tienda Frontera</title>
-    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Enlace a la hoja de estilos principal -->
+    <link rel="stylesheet" href="css/styles.css"/>
   </head>
+
   <body>
+    <!-- Encabezado del sitio -->
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
+
+      <!-- Navegación principal del sitio -->
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="index.html">Inicio</a></li>
@@ -18,28 +28,34 @@
       </nav>
     </header>
 
+    <!-- Contenido principal de la página -->
     <main class="main-content">
       <section class="checkout-section">
         <h2>Finalizar Compra</h2>
         <p>Por favor completa los siguientes datos para procesar tu pedido.</p>
 
+        <!-- Resumen de los artículos del carrito -->
         <div id="order-summary">
           <h3>Resumen del pedido</h3>
-          <ul id="summary-items"></ul>
+          <ul id="summary-items">
+            <!-- Los productos seleccionados se agregarán dinámicamente aquí -->
+          </ul>
           <p id="summary-total"><strong>Total:</strong> &#8353;0</p>
         </div>
 
+        <!-- Mensaje de confirmación o error tras enviar el formulario -->
         <div id="checkoutMessage" class="message" style="display:none;"></div>
         
+        <!-- Formulario para ingresar los datos del cliente -->
         <form class="checkout-form">
           <label for="name">Nombre completo</label>
-          <input type="text" id="name" name="name" required />
+          <input type="text" id="name" name="name" required/>
 
           <label for="address">Dirección</label>
-          <input type="text" id="address" name="address" required />
+          <input type="text" id="address" name="address" required/>
 
           <label for="email">Correo electrónico</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required/>
 
           <label for="payment">Método de pago</label>
           <select id="payment" name="payment" required>
@@ -49,14 +65,18 @@
             <option value="efectivo">Pago contra entrega</option>
           </select>
 
+          <!-- Botón para confirmar el pedido -->
           <button type="submit" class="btn">Confirmar Pedido</button>
         </form>
       </section>
     </main>
 
+    <!-- Pie de página del sitio -->
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Script para manejar la lógica del checkout -->
     <script src="js/checkout.js"></script>
   </body>
 </html>

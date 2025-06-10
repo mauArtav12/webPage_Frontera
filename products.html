@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Configuración del documento -->
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Título de la pestaña -->
     <title>Productos | Tienda Frontera</title>
-    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Enlace a la hoja de estilos principal -->
+    <link rel="stylesheet" href="css/styles.css"/>
   </head>
 
   <body>
+    <!-- Encabezado del sitio -->
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
+
+      <!-- Navegación principal del sitio -->
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="index.html">Inicio</a></li>
@@ -20,9 +28,11 @@
       </nav>
     </header>
 
+    <!-- Contenido principal de la página -->
     <main class="main-content with-sidebar">
-      <!-- Sidebar con buscador y filtros -->
+      <!-- Barra lateral de filtros -->
       <aside class="filters-sidebar">
+        <!-- Filtro de búsqueda -->
         <div class="filter-group search-group">
           <h3>Buscar</h3>
           <input
@@ -33,33 +43,55 @@
           />
         </div>
 
+        <!-- Filtro por categoría -->
         <div class="filter-group">
           <h3>Categorías</h3>
           <div id="category-filters">
-            <!-- Checkboxes se insertan por JS -->
+            <!-- Las categorías se insertan dinámicamente por JavaScript -->
           </div>
         </div>
 
-        <!-- Aquí puedes agregar más filtros como color, talla, precio -->
+        <!-- Filtro por rango de precio -->
         <div class="filter-group">
           <h3>Rango de Precio</h3>
-          <label for="price-min">Mínimo: ₡<span id="price-min-value">0</span></label>
-          <input type="range" id="price-min" min="0" max="100000" value="0" step="1000" />
+
+          <label for="price-min">
+            Mínimo: &#8353;<span id="price-min-value">0</span>
+          </label>
+          <input
+            type="range"
+            id="price-min"
+            min="0"
+            max="100000"
+            value="0"
+            step="1000"
+          />
           
-          <label for="price-max">Máximo: ₡<span id="price-max-value">100000</span></label>
-          <input type="range" id="price-max" min="0" max="100000" value="100000" step="1000" />
+          <label for="price-max">
+            Máximo: &#8353;<span id="price-max-value">100000</span>
+          </label>
+          <input
+            type="range"
+            id="price-max"
+            min="0"
+            max="100000"
+            value="100000"
+            step="1000"
+          />
         </div>
       </aside>
 
-      <!-- Sección de productos -->
+      <!-- Sección principal de productos -->
       <section class="products-section">
         <h2 class="section-title">Nuestros Productos</h2>
+
         <div class="product-grid" id="product-grid">
-          <!-- Aquí JS insertará los productos -->
+          <!-- Aquí se insertarán los productos dinámicamente con JS -->
         </div>
       </section>
     </main>
 
+    <!-- Pie de página del sitio -->
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
@@ -68,7 +100,8 @@
     <div id="add-to-cart-modal" class="modal hidden">
       <div class="modal-content">
         <h3>¿Cuántos quieres agregar al carrito?</h3>
-        <input type="number" id="quantity-input" min="1" value="1" />
+        <input type="number" id="quantity-input" min="1" value="1"/>
+
         <div class="modal-actions">
           <button id="confirm-add-btn">Agregar</button>
           <button id="cancel-add-btn">Cancelar</button>
@@ -83,9 +116,11 @@
       role="alert"
       aria-live="assertive"
       aria-atomic="true"
-    ></div>
+    >
+      <!-- El contenido se inserta desde JS -->
+    </div>
 
-    <!-- Scripts -->
+    <!-- Inclusión de scripts JS -->
     <script src="js/data.js"></script>
     <script src="js/formatter.js"></script>
     <script src="js/toast.js"></script>

@@ -1,31 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
+    <!-- Configuración del documento -->
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- Título de la pestaña -->
     <title>Carrito | Tienda Frontera</title>
+
+    <!-- Enlace a la hoja de estilos principal -->
     <link rel="stylesheet" href="css/styles.css"/>
   </head>
 
   <body>
+    <!-- Encabezado del sitio -->
     <header class="site-header">
       <h1 class="site-title">Tienda Frontera</h1>
+
+      <!-- Navegación principal del sitio -->
       <nav class="main-nav">
         <ul class="nav-list">
           <li><a href="index.html">Inicio</a></li>
           <li><a href="products.html">Productos</a></li>
           <li><a href="cart.html" aria-current="page">Carrito</a></li>
-          <li><a href="contact.html">Contactanos</a></li>
+          <li><a href="contact.html">Contáctanos</a></li>
         </ul>
       </nav>
     </header>
 
+    <!-- Contenido principal de la página -->
     <main class="main-content">
       <section id="cart-section">
         <h2>Carrito de Compras</h2>
+
+        <!-- Contenedor dinámico para productos en el carrito -->
         <div id="cart-items">
-          <!-- Los productos agregados se mostraran aqui dinamicamente -->
+          <!-- Los productos agregados se mostrarán aquí dinámicamente -->
         </div>
+
+        <!-- Sección que muestra el total del carrito y enlace al checkout -->
         <div id="cart-total-container">
           <p><strong>Total:</strong> <span id="cart-total">0.00</span></p>
           <a href="checkout.html" class="btn">Proceder al pago</a>
@@ -33,14 +46,22 @@
       </section>
     </main>
 
+    <!-- Pie de página del sitio -->
     <footer class="site-footer">
       <p>&copy; 2025 Tienda Frontera. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Modal para confirmar la eliminación de productos del carrito -->
     <div id="remove-from-cart-modal" class="modal hidden">
       <div class="modal-content">
         <h3 id="modal-title">¿Cuántos productos deseas eliminar?</h3>
-        <input type="number" id="remove-quantity-input" min="1" value="1" aria-describedby="modal-desc"/>
+        <input 
+          type="number"
+          id="remove-quantity-input"
+          min="1"
+          value="1"
+          aria-describedby="modal-desc"
+        />
         <div class="modal-buttons">
           <button id="confirm-remove-btn" type="button">Confirmar</button>
           <button id="cancel-remove-btn" type="button">Cancelar</button>
@@ -48,8 +69,16 @@
       </div>
     </div>
 
-    <div id="toast" class="toast hidden" role="alert" aria-live="assertive" aria-atomic="true"></div>
+    <!-- Notificación tipo "toast" para mensajes emergentes -->
+    <div
+      id="toast"
+      class="toast hidden"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+    ></div>
 
+    <!-- Scripts de funcionalidad del carrito y notificaciones -->
     <script src="js/toast.js"></script>
     <script src="js/cart.js"></script>
   </body>
