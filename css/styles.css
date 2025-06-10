@@ -439,19 +439,21 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  justify-items: center;
-  align-items: stretch;
-  padding: 1rem;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .product-card {
+  width: 250px;           /* tamaño fijo */
+  height: 450px;          /* altura fija para uniformidad */
+  box-sizing: border-box; /* incluye padding y borde en el tamaño */
+  overflow: hidden;       /* evita que contenido crezca y desordene */
   border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
 }
 
 .product-image {
