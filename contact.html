@@ -19,11 +19,27 @@
 
       <!-- Navegación principal del sitio -->
       <nav class="main-nav">
-        <ul class="nav-list">
+        <ul class="nav-list nav-center">
           <li><a href="index.html">Inicio</a></li>
           <li><a href="products.html">Productos</a></li>
-          <li><a href="cart.html">Carrito</a></li>
           <li><a href="contact.html" aria-current="page">Contáctanos</a></li>
+        </ul>
+        <ul class="nav-list nav-cart">
+          <li>
+            <a href="cart.html" aria-label="Carrito" class="cart-icon">
+              <!-- SVG carrito -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path d="M6 6h15l-1.5 9h-13L4 4H2V2h3a1 1 0 0 1 .96.73L6 6zm0 11a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+              </svg>
+              <span class="cart-count" id="cart-count">0</span>
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -46,7 +62,7 @@
           <p>
             <strong>Correo electronico:</strong>
             <a href="mailto:artavia.monge.mauricio@gmail.com">
-              artavia.monge.mauricio@gmail.completa
+              artavia.monge.mauricio@gmail.com
             </a>
           </p>
         </section>
@@ -111,6 +127,7 @@
     </footer>
 
     <!-- Script de funcionalidad del formulario -->
+    <script src="js/cart-counter.js"></script>
     <script src="js/contact.js"></script>
   </body>
 </html>

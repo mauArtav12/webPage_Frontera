@@ -94,6 +94,9 @@ function addToCart(productID, quantity) {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
+  // Actualizar contador al instante
+  updateCartCount();
+
   const totalQuantity = cart[index !== -1 ? index : cart.length - 1].quantity;
   showToast(`"${product.name}" fue agregado al carrito. Ahora hay ${totalQuantity}.`);
 }
