@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso Administrador | Tienda Frontera</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    /* Reset global: todos los elementos usan box-sizing: border-box */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+  
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  
+    .login-container {
+      background-color: white;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 360px;
+    }
+  
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #2d6a4f;
+      text-align: center;
+    }
+  
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+  
+    .login-container button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background-color: #2d6a4f;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+  
+    .login-container button:hover {
+      background-color: #1b4332;
+    }
+  
+    .login-container .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      text-align: center;
+    }
+  
+    .login-container .logo {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  
+    .login-container .logo img {
+      max-width: 90px;
+    }
+  </style>  
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="logo">
+      <img src="img/logo-frontera.png" alt="Logo Frontera" />
+    </div>
+    <h2>Login Admin</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Usuario" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Ingresar</button>
+      <p class="error" id="errorMsg"></p>
+    </form>
+  </div>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>

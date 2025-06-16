@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel de Edición de Productos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f1;
+      margin: 20px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    /* Contenedor principal de tabla y panel */
+    #mainContainer {
+      flex: 1;
+      display: flex;
+      gap: 20px;
+      height: 100%;
+    }
+
+    /* Tabla con scroll vertical */
+    #tableContainer {
+      flex: 2;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 700px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      background-color: #2d6a4f;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    button {
+      padding: 6px 10px;
+      border: none;
+      background-color: #2d6a4f;
+      color: white;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #1b4332;
+    }
+
+    /* Panel de edición a la derecha */
+    #editPanel {
+      flex: 1;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+    }
+
+    #editPanel.hidden {
+      display: none;
+    }
+
+    #editPanel h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    #editPanel label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    #editPanel input[type="text"],
+    #editPanel input[type="number"],
+    #editPanel input[type="url"],
+    #editPanel select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    #editPanel input[type="checkbox"] {
+      margin-left: 0;
+      transform: scale(1.2);
+      vertical-align: middle;
+    }
+
+    #editPanel .actions {
+      margin-top: auto;
+      text-align: right;
+      padding-top: 20px;
+    }
+
+    #editPanel .actions button {
+      margin-left: 10px;
+    }
+
+    /* Mensajes visuales */
+    #message {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Panel de Edición de Productos</h1>
+
+  <div id="message"></div>
+
+  <div id="mainContainer">
+    <div id="tableContainer">
+      <table id="productsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio (₡)</th>
+            <th>Imagen</th>
+            <th>Categoría</th>
+            <th>Destacado</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="editPanel" class="hidden">
+      <h2>Editar Producto</h2>
+      <form id="editForm">
+        <label>ID</label>
+        <input type="text" id="editId" disabled />
+
+        <label>Nombre</label>
+        <input type="text" id="editName" required />
+
+        <label>Descripción</label>
+        <input type="text" id="editDescription" required />
+
+        <label>Precio (₡)</label>
+        <input type="number" id="editPrice" min="0" required />
+
+        <label>Imagen (URL o ruta)</label>
+        <input type="text" id="editImage" required />
+
+        <label>Categoría</label>
+        <input type="text" id="editCategory" required />
+
+        <label>
+          <input type="checkbox" id="editFeatured" />
+          Destacado
+        </label>
+
+        <div class="actions">
+          <button type="button" id="cancelBtn">Cancelar</button>
+          <button type="submit" id="saveBtn">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const tableBody = document.querySelector("#productsTable tbody");
+    const editPanel = document.getElementById("editPanel");
+    const editForm = document.getElementById("editForm");
+    const messageDiv = document.getElementById("message");
+
+    // Inputs edición
+    const editId = document.getElementById("editId");
+    const editName = document.getElementById("editName");
+    const editDescription = document.getElementById("editDescription");
+    const editPrice = document.getElementById("editPrice");
+    const editImage = document.getElementById("editImage");
+    const editCategory = document.getElementById("editCategory");
+    const editFeatured = document.getElementById("editFeatured");
+
+    let products = [];
+    let currentEditIndex = null;
+
+    function showMessage(text, type = 'success') {
+      messageDiv.textContent = text;
+      messageDiv.style.display = 'block';
+      if (type === 'success') {
+        messageDiv.style.backgroundColor = '#d4edda';
+        messageDiv.style.color = '#155724';
+        messageDiv.style.border = '1px solid #c3e6cb';
+      } else {
+        messageDiv.style.backgroundColor = '#f8d7da';
+        messageDiv.style.color = '#721c24';
+        messageDiv.style.border = '1px solid #f5c6cb';
+      }
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 4000);
+    }
+
+    function validateForm() {
+      const name = editName.value.trim();
+      const description = editDescription.value.trim();
+      const price = Number(editPrice.value);
+      const image = editImage.value.trim();
+      const category = editCategory.value.trim();
+
+      if (!name) {
+        showMessage('El nombre no puede estar vacío.', 'error');
+        return false;
+      }
+      if (!description) {
+        showMessage('La descripción no puede estar vacía.', 'error');
+        return false;
+      }
+      if (isNaN(price) || price < 0) {
+        showMessage('El precio debe ser un número igual o mayor a 0.', 'error');
+        return false;
+      }
+      if (!category) {
+        showMessage('La categoría no puede estar vacía.', 'error');
+        return false;
+      }
+      try {
+        new URL(image);
+      } catch {
+        showMessage('La imagen debe ser una URL válida.', 'error');
+        return false;
+      }
+      return true;
+    }
+
+    // Cargar productos desde backend
+    async function fetchProducts() {
+      try {
+        const res = await fetch('http://localhost:3000/products');
+        if (!res.ok) throw new Error('Error al cargar productos');
+        products = await res.json();
+        renderTable();
+      } catch (error) {
+        showMessage('No se pudieron cargar los productos.', 'error');
+        console.error(error);
+      }
+    }
+
+    // Renderizar tabla
+    function renderTable() {
+      tableBody.innerHTML = "";
+      products.forEach((prod, index) => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td>${prod.id}</td>
+          <td>${prod.name}</td>
+          <td>${prod.description}</td>
+          <td>₡${prod.price.toLocaleString()}</td>
+          <td><img src="${prod.image}" alt="${prod.name}" style="max-height:40px; max-width:60px; object-fit:cover; border-radius:4px;"></td>
+          <td>${prod.category}</td>
+          <td>${prod.featured ? "Sí" : "No"}</td>
+          <td><button data-index="${index}" class="editBtn">Editar</button></td>
+        `;
+
+        tableBody.appendChild(tr);
+      });
+
+      document.querySelectorAll(".editBtn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const idx = parseInt(e.target.dataset.index);
+          openEditPanel(idx);
+        });
+      });
+    }
+
+    // Abrir panel y cargar datos
+    function openEditPanel(index) {
+      currentEditIndex = index;
+      const prod = products[index];
+      editId.value = prod.id;
+      editName.value = prod.name;
+      editDescription.value = prod.description;
+      editPrice.value = prod.price;
+      editImage.value = prod.image;
+      editCategory.value = prod.category;
+      editFeatured.checked = prod.featured;
+
+      editPanel.classList.remove("hidden");
+    }
+
+    // Cancelar edición
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      editPanel.classList.add("hidden");
+      currentEditIndex = null;
+    });
+
+    // Guardar cambios con PUT al backend
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (currentEditIndex === null) return;
+
+      // Validar formulario antes de enviar
+      if (!validateForm()) return;
+
+      const updatedProduct = {
+        id: products[currentEditIndex].id, // Mantener id
+        name: editName.value.trim(),
+        description: editDescription.value.trim(),
+        price: Number(editPrice.value),
+        image: editImage.value.trim(),
+        category: editCategory.value.trim(),
+        featured: editFeatured.checked
+      };
+
+      try {
+        const res = await fetch(`http://localhost:3000/products/${updatedProduct.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedProduct)
+        });
+
+        if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.error || 'Error desconocido al actualizar producto');
+        }
+
+        const data = await res.json();
+
+        // Actualizar local con el producto actualizado del backend
+        products[currentEditIndex] = data; // data es el producto actualizado
+
+        renderTable();
+        editPanel.classList.add("hidden");
+        currentEditIndex = null;
+        showMessage('Producto actualizado con éxito', 'success');
+      } catch (error) {
+        showMessage(`No se pudo actualizar el producto: ${error.message}`, 'error');
+        console.error(error);
+      }
+    });
+
+    // Inicializar
+    fetchProducts();
+  </script>
+</body>
+</html>
