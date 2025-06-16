@@ -2,43 +2,58 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>Panel de Edición de Productos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Productos | Tienda Frontera</title>
   <style>
+    *, *::before, *::after { box-sizing: border-box; }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f0f4f1;
-      margin: 20px;
-      height: 90vh;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: #2d6a4f;
     }
 
-    h1 {
-      margin-bottom: 20px;
+    h1 { margin-bottom: 20px; font-size: 1.5rem; }
+
+    #message {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 600;
+      width: 100%;
+      max-width: 1080px;
     }
 
-    /* Contenedor principal de tabla y panel */
     #mainContainer {
-      flex: 1;
       display: flex;
+      flex-wrap: wrap;
       gap: 20px;
-      height: 100%;
+      width: 100%;
+      max-width: 1080px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
 
-    /* Tabla con scroll vertical */
     #tableContainer {
       flex: 2;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: white;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      overflow-x: auto;
+      border-radius: 8px;
+      min-width: 0;
+      background-color: white;
+      padding: 10px;
     }
 
     table {
       border-collapse: collapse;
       width: 100%;
-      min-width: 700px;
+      table-layout: auto;
     }
 
     th, td {
@@ -63,36 +78,34 @@
       background-color: #2d6a4f;
       color: white;
       cursor: pointer;
-      border-radius: 4px;
+      border-radius: 6px;
       font-weight: bold;
       transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #1b4332;
     }
 
-    /* Panel de edición a la derecha */
     #editPanel {
       flex: 1;
-      background: white;
       border: 1px solid #ccc;
       padding: 20px;
       border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       max-width: 400px;
+      min-width: 280px;
       display: flex;
       flex-direction: column;
-      height: 100%;
-      overflow-y: auto;
     }
 
-    #editPanel.hidden {
-      display: none;
-    }
+    #editPanel.hidden { display: none; }
 
     #editPanel h2 {
       margin-top: 0;
       margin-bottom: 15px;
+      font-size: 1.3rem;
     }
 
     #editPanel label {
@@ -111,7 +124,6 @@
       border-radius: 6px;
       border: 1px solid #aaa;
       font-size: 1rem;
-      box-sizing: border-box;
     }
 
     #editPanel input[type="checkbox"] {
@@ -130,20 +142,73 @@
       margin-left: 10px;
     }
 
-    /* Mensajes visuales */
-    #message {
-      padding: 12px;
-      margin-bottom: 15px;
-      border-radius: 6px;
-      display: none;
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
       font-weight: 600;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      transform: scale(1.2);
+      accent-color: #2d6a4f;
+      margin: 0;
+    }
+
+    @media (max-width: 768px) {
+      #mainContainer {
+        flex-direction: column;
+        padding: 16px;
+      }
+
+      table {
+        font-size: 0.9rem;
+        min-width: 600px;
+      }
+
+      #editPanel {
+        max-width: 100%;
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+        text-align: center;
+      }
+
+      button {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #editPanel {
+        position: fixed;
+        top: 10%;
+        left: 5%;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        z-index: 999;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        background: white;
+      }
+
+      body.editing {
+        overflow: hidden;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Panel de Edición de Productos</h1>
+  <button onclick="location.href='admin-panel.html'" style="align-self: flex-start; margin-bottom: 10px;">
+    ← Volver al Panel de Administración
+  </button>
 
+  <h1>Panel de Edición de Productos</h1>
   <div id="message"></div>
 
   <div id="mainContainer">
@@ -186,9 +251,9 @@
         <label>Categoría</label>
         <input type="text" id="editCategory" required />
 
-        <label>
+        <label class="checkbox-row">
           <input type="checkbox" id="editFeatured" />
-          Destacado
+          <span>Destacado</span>
         </label>
 
         <div class="actions">
@@ -200,12 +265,13 @@
   </div>
 
   <script>
+    let products = [];
+
     const tableBody = document.querySelector("#productsTable tbody");
     const editPanel = document.getElementById("editPanel");
     const editForm = document.getElementById("editForm");
-    const messageDiv = document.getElementById("message");
+    const messageBox = document.getElementById("message");
 
-    // Inputs edición
     const editId = document.getElementById("editId");
     const editName = document.getElementById("editName");
     const editDescription = document.getElementById("editDescription");
@@ -214,166 +280,103 @@
     const editCategory = document.getElementById("editCategory");
     const editFeatured = document.getElementById("editFeatured");
 
-    let products = [];
-    let currentEditIndex = null;
-
-    function showMessage(text, type = 'success') {
-      messageDiv.textContent = text;
-      messageDiv.style.display = 'block';
-      if (type === 'success') {
-        messageDiv.style.backgroundColor = '#d4edda';
-        messageDiv.style.color = '#155724';
-        messageDiv.style.border = '1px solid #c3e6cb';
-      } else {
-        messageDiv.style.backgroundColor = '#f8d7da';
-        messageDiv.style.color = '#721c24';
-        messageDiv.style.border = '1px solid #f5c6cb';
-      }
-      setTimeout(() => {
-        messageDiv.style.display = 'none';
-      }, 4000);
-    }
-
-    function validateForm() {
-      const name = editName.value.trim();
-      const description = editDescription.value.trim();
-      const price = Number(editPrice.value);
-      const image = editImage.value.trim();
-      const category = editCategory.value.trim();
-
-      if (!name) {
-        showMessage('El nombre no puede estar vacío.', 'error');
-        return false;
-      }
-      if (!description) {
-        showMessage('La descripción no puede estar vacía.', 'error');
-        return false;
-      }
-      if (isNaN(price) || price < 0) {
-        showMessage('El precio debe ser un número igual o mayor a 0.', 'error');
-        return false;
-      }
-      if (!category) {
-        showMessage('La categoría no puede estar vacía.', 'error');
-        return false;
-      }
-      try {
-        new URL(image);
-      } catch {
-        showMessage('La imagen debe ser una URL válida.', 'error');
-        return false;
-      }
-      return true;
-    }
-
-    // Cargar productos desde backend
     async function fetchProducts() {
       try {
-        const res = await fetch('http://localhost:3000/products');
-        if (!res.ok) throw new Error('Error al cargar productos');
-        products = await res.json();
+        const response = await fetch('/api/products');
+        products = await response.json();
         renderTable();
-      } catch (error) {
-        showMessage('No se pudieron cargar los productos.', 'error');
-        console.error(error);
+      } catch (err) {
+        console.error("Error al cargar productos:", err);
+        showMessage("No se pudieron cargar los productos.");
       }
     }
 
-    // Renderizar tabla
     function renderTable() {
       tableBody.innerHTML = "";
-      products.forEach((prod, index) => {
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-          <td>${prod.id}</td>
-          <td>${prod.name}</td>
-          <td>${prod.description}</td>
-          <td>₡${prod.price.toLocaleString()}</td>
-          <td><img src="${prod.image}" alt="${prod.name}" style="max-height:40px; max-width:60px; object-fit:cover; border-radius:4px;"></td>
-          <td>${prod.category}</td>
-          <td>${prod.featured ? "Sí" : "No"}</td>
-          <td><button data-index="${index}" class="editBtn">Editar</button></td>
+      products.forEach((product) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${product.id}</td>
+          <td>${product.name}</td>
+          <td>${product.description}</td>
+          <td>${product.price}</td>
+          <td><img src="${product.image}" alt="${product.name}" width="40"></td>
+          <td>${product.category}</td>
+          <td>${product.featured ? "✔️" : ""}</td>
+          <td><button onclick="editProduct(${product.id})">Editar</button></td>
         `;
-
-        tableBody.appendChild(tr);
-      });
-
-      document.querySelectorAll(".editBtn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          const idx = parseInt(e.target.dataset.index);
-          openEditPanel(idx);
-        });
+        tableBody.appendChild(row);
       });
     }
 
-    // Abrir panel y cargar datos
-    function openEditPanel(index) {
-      currentEditIndex = index;
-      const prod = products[index];
-      editId.value = prod.id;
-      editName.value = prod.name;
-      editDescription.value = prod.description;
-      editPrice.value = prod.price;
-      editImage.value = prod.image;
-      editCategory.value = prod.category;
-      editFeatured.checked = prod.featured;
+    function editProduct(id) {
+      const product = products.find(p => p.id === id);
+      if (product) {
+        editId.value = product.id;
+        editName.value = product.name;
+        editDescription.value = product.description;
+        editPrice.value = product.price;
+        editImage.value = product.image;
+        editCategory.value = product.category;
+        editFeatured.checked = product.featured;
 
-      editPanel.classList.remove("hidden");
+        editPanel.classList.remove("hidden");
+        document.body.classList.add("editing");
+        messageBox.style.display = "none";
+      }
     }
 
-    // Cancelar edición
     document.getElementById("cancelBtn").addEventListener("click", () => {
       editPanel.classList.add("hidden");
-      currentEditIndex = null;
+      document.body.classList.remove("editing");
     });
 
-    // Guardar cambios con PUT al backend
     editForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (currentEditIndex === null) return;
-
-      // Validar formulario antes de enviar
-      if (!validateForm()) return;
-
+      const id = parseInt(editId.value);
       const updatedProduct = {
-        id: products[currentEditIndex].id, // Mantener id
-        name: editName.value.trim(),
-        description: editDescription.value.trim(),
-        price: Number(editPrice.value),
-        image: editImage.value.trim(),
-        category: editCategory.value.trim(),
-        featured: editFeatured.checked
+        name: editName.value,
+        description: editDescription.value,
+        price: parseFloat(editPrice.value),
+        image: editImage.value,
+        category: editCategory.value,
+        featured: editFeatured.checked,
       };
 
       try {
-        const res = await fetch(`http://localhost:3000/products/${updatedProduct.id}`, {
+        const response = await fetch(`/api/products/${id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedProduct)
+          body: JSON.stringify(updatedProduct),
         });
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.error || 'Error desconocido al actualizar producto');
-        }
+        if (!response.ok) throw new Error("Error al actualizar");
 
-        const data = await res.json();
-
-        // Actualizar local con el producto actualizado del backend
-        products[currentEditIndex] = data; // data es el producto actualizado
+        const updated = await response.json();
+        const index = products.findIndex(p => p.id === id);
+        products[index] = updated;
 
         renderTable();
         editPanel.classList.add("hidden");
-        currentEditIndex = null;
-        showMessage('Producto actualizado con éxito', 'success');
-      } catch (error) {
-        showMessage(`No se pudo actualizar el producto: ${error.message}`, 'error');
-        console.error(error);
+        editForm.reset();
+        document.body.classList.remove("editing");
+        showMessage("Producto actualizado correctamente.");
+      } catch (err) {
+        console.error(err);
+        showMessage("Error al guardar los cambios.");
       }
     });
 
-    // Inicializar
+    function showMessage(msg) {
+      messageBox.innerText = msg;
+      messageBox.style.display = "block";
+      messageBox.style.backgroundColor = "#d8f3dc";
+      messageBox.style.border = "1px solid #95d5b2";
+      setTimeout(() => {
+        messageBox.style.display = "none";
+      }, 3000);
+    }
+
     fetchProducts();
   </script>
 </body>

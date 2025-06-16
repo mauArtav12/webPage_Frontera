@@ -1,6 +1,6 @@
 // Lista de administradores válidos
 const admins = [
-  { username: "mau", password: "frontera123" },
+  { username: "martavia.dev", password: "frontera123" },
   { username: "admin", password: "adminpass" }
 ];
 

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventario | Tienda Frontera</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f4f1;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #2d6a4f;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    #message {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      display: none;
+      font-weight: 600;
+      max-width: 1080px;
+      width: 100%;
+    }
+
+    #mainContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      max-width: 1080px;
+    }
+
+    #tableContainer {
+      flex: 2;
+      overflow-x: auto;
+      background-color: white;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    th {
+      background-color: #2d6a4f;
+      color: white;
+    }
+
+    button {
+      padding: 6px 10px;
+      border: none;
+      background-color: #2d6a4f;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #editPanel {
+      flex: 1;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      max-width: 400px;
+      display: none;
+      flex-direction: column;
+    }
+
+    #editPanel label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    #editPanel input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+    }
+
+    .actions {
+      margin-top: 20px;
+      text-align: right;
+    }
+
+    .actions button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="location.href='admin-panel.html'" style="align-self: flex-start; margin-bottom: 10px;">
+    ← Volver al Panel de Administración
+  </button>
+
+  <h1>Gestión de Inventario</h1>
+  <div id="message"></div>
+
+  <div id="mainContainer">
+    <div id="tableContainer">
+      <table id="inventoryTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Stock</th>
+            <th>Editar</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div id="editPanel">
+      <h2>Editar Stock</h2>
+      <form id="editForm">
+        <label>ID</label>
+        <input type="text" id="editId" disabled />
+
+        <label>Nombre</label>
+        <input type="text" id="editName" disabled />
+
+        <label>Stock Disponible</label>
+        <input type="number" id="editStock" min="0" required />
+
+        <div class="actions">
+          <button type="button" id="cancelBtn">Cancelar</button>
+          <button type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let products = [
+      { id: 1, name: "Producto 1", stock: 34 },
+      { id: 2, name: "Producto 2", stock: 12 },
+      { id: 3, name: "Producto 3", stock: 56 },
+      { id: 4, name: "Producto 4", stock: 89 },
+      { id: 5, name: "Producto 5", stock: 7 },
+      { id: 6, name: "Producto 6", stock: 41 },
+      { id: 7, name: "Producto 7", stock: 0 },
+      { id: 8, name: "Producto 8", stock: 19 },
+      { id: 9, name: "Producto 9", stock: 67 },
+      { id: 10, name: "Producto 10", stock: 32 },
+      { id: 11, name: "Producto 11", stock: 28 },
+      { id: 12, name: "Producto 12", stock: 90 },
+      { id: 13, name: "Producto 13", stock: 3 },
+      { id: 14, name: "Producto 14", stock: 76 },
+      { id: 15, name: "Producto 15", stock: 22 },
+      { id: 16, name: "Producto 16", stock: 50 },
+      { id: 17, name: "Producto 17", stock: 15 },
+      { id: 18, name: "Producto 18", stock: 60 },
+      { id: 19, name: "Producto 19", stock: 44 },
+      { id: 20, name: "Producto 20", stock: 5 }
+    ];
+
+    const tableBody = document.querySelector("#inventoryTable tbody");
+    const editPanel = document.getElementById("editPanel");
+    const editForm = document.getElementById("editForm");
+    const messageBox = document.getElementById("message");
+
+    const editId = document.getElementById("editId");
+    const editName = document.getElementById("editName");
+    const editStock = document.getElementById("editStock");
+
+    // async function fetchProducts() {
+    //   try {
+    //     const res = await fetch('/api/products');
+    //     products = await res.json();
+    //     renderTable();
+    //   } catch (err) {
+    //     console.error("Error al cargar inventario:", err);
+    //     showMessage("No se pudo cargar el inventario.");
+    //   }
+    // }
+
+    function renderTable() {
+      tableBody.innerHTML = "";
+      products.forEach(product => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${product.id}</td>
+          <td>${product.name}</td>
+          <td>${product.stock ?? 0}</td>
+          <td><button onclick="editProduct(${product.id})">Editar</button></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function editProduct(id) {
+      const p = products.find(p => p.id === id);
+      if (!p) return;
+      editId.value = p.id;
+      editName.value = p.name;
+      editStock.value = p.stock ?? 0;
+      editPanel.style.display = "flex";
+      messageBox.style.display = "none";
+    }
+
+    document.getElementById("cancelBtn").addEventListener("click", () => {
+      editPanel.style.display = "none";
+    });
+
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = parseInt(editId.value);
+      const updatedStock = parseInt(editStock.value);
+
+      // Simula actualización local
+      const index = products.findIndex(p => p.id === id);
+      if (index !== -1) {
+        products[index].stock = updatedStock;
+        renderTable();
+        editPanel.style.display = "none";
+        showMessage("Stock actualizado correctamente.");
+      } else {
+        showMessage("Producto no encontrado.");
+      }
+    });
+
+    function showMessage(msg) {
+      messageBox.innerText = msg;
+      messageBox.style.display = "block";
+      messageBox.style.backgroundColor = "#d8f3dc";
+      messageBox.style.border = "1px solid #95d5b2";
+      setTimeout(() => { messageBox.style.display = "none"; }, 3000);
+    }
+
+    // fetchProducts(); // Desactivado temporalmente
+    renderTable();    // Activado para ver los datos mock
+  </script>
+</body>
+</html>
